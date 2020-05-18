@@ -18,7 +18,6 @@ public class Modulo1 {
     }
 
 
-
     public String exToPostix(String regularExpression) {
         //Texto con el formato
         String formattedEx = formattedEx(regularExpression);
@@ -27,26 +26,26 @@ public class Modulo1 {
         Stack<Character> stack = new Stack<>();
 
         for (Character c : formattedEx.toCharArray()) {
-            switch (c){
+            switch (c) {
                 case '(':
                     stack.push(c);
                     break;
 
                 case ')':
-                    while (!stack.peek().equals('(')){
+                    while (!stack.peek().equals('(')) {
                         postfix += stack.pop();
                     }
                     stack.pop();
                     break;
 
                 default:
-                    while (stack.size() > 0 ){
+                    while (stack.size() > 0) {
                         Character peekedChar = stack.peek();
 
                         Integer peekedCharPrecedence = getPrecedence(peekedChar);
                         Integer currentCharPrecedence = getPrecedence(c);
 
-                        if(peekedCharPrecedence >= currentCharPrecedence)
+                        if (peekedCharPrecedence >= currentCharPrecedence)
                             postfix += stack.pop();
                         else break;
                     }
@@ -54,7 +53,7 @@ public class Modulo1 {
                     break;
             }
         }
-        while (stack.size() > 0 )
+        while (stack.size() > 0)
             postfix += stack.pop();
         return postfix;
     }
@@ -65,6 +64,7 @@ public class Modulo1 {
     }
 
     private static final Map<Character, Integer> precedenceMap;
+
     static {
         Map<Character, Integer> map = new HashMap<>();
         map.put('(', 0);
@@ -74,7 +74,7 @@ public class Modulo1 {
         map.put('*', 3);
 
         precedenceMap = Collections.unmodifiableMap(map);
-    };
+    }
 
     public String formattedEx(String regularExpression) {
         StringBuilder formattedEx = new StringBuilder();
@@ -82,12 +82,31 @@ public class Modulo1 {
         for (int i = 0; i < regularExpression.length(); i++) {
             if (operators.contains(regularExpression.charAt(i)) || regularExpression.charAt(i) == '(') {
                 formattedEx.append(regularExpression.charAt(i));
+                if (Character.isWhitespace(regularExpression.charAt(i))) {
+                    System.out.println("Encontre vacio 0");
+                }
+
             } else {
                 if (i + 1 < regularExpression.length() && regularExpression.charAt(i) == '\\' && regularExpression.charAt(i + 1) == 'n') {
                     formattedEx.append("#");
                     i++;
+                    if (Character.isWhitespace(regularExpression.charAt(i))) {
+                        System.out.println("Encontre vacio 1");
+                    }
+
                 } else if (i + 1 < regularExpression.length() && !operators.contains(regularExpression.charAt(i + 1)) && regularExpression.charAt(i + 1) != ')') {
-                    formattedEx.append(regularExpression.charAt(i)).append(".");
+                    if (Character.isWhitespace(regularExpression.charAt(i))) {
+                        formattedEx.append("$");
+                    } else {
+                        formattedEx.append(regularExpression.charAt(i)).append(".");
+                    }
+                    if (i + 1 < regularExpression.length() &&
+                            Character.isWhitespace(regularExpression.charAt(i)) &&
+                            regularExpression.charAt(i + 1) != ')' &&
+                            (regularExpression.charAt(i + 1) == '(' || !operators.contains(regularExpression.charAt(i + 1)))
+                    ) {
+                        formattedEx.append(".");
+                    }
                 } else {
                     if (Character.isWhitespace(regularExpression.charAt(i))) {
                         formattedEx.append("$");
