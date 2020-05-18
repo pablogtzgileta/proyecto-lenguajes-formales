@@ -14,6 +14,8 @@ public class Modulo1 {
 
     }
 
+
+
     public String exToPostix(String regularExpression) {
         //Texto con el formato
         String formattedEx = formattedEx(regularExpression);
