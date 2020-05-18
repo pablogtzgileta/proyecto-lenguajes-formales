@@ -41,10 +41,6 @@ public class Modulo2 {
                 }
             }
         }
-
-        printPattern();
-        System.out.println("Initial state: " + initialGlobalState);
-
         return pattern;
     }
 
@@ -158,13 +154,15 @@ public class Modulo2 {
                 }
             }
         }
-
     }
 
-    private void printPattern() {
+    public void printPattern() {
         pattern.forEach((k, v) -> {
             System.out.print(k);
             System.out.println(Arrays.toString(v));
         });
+
+        System.out.println("Initial State: " + initialGlobalState);
     }
+
 }
