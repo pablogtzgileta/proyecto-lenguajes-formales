@@ -82,18 +82,10 @@ public class Modulo1 {
         for (int i = 0; i < regularExpression.length(); i++) {
             if (operators.contains(regularExpression.charAt(i)) || regularExpression.charAt(i) == '(') {
                 formattedEx.append(regularExpression.charAt(i));
-                if (Character.isWhitespace(regularExpression.charAt(i))) {
-                    System.out.println("Encontre vacio 0");
-                }
-
             } else {
                 if (i + 1 < regularExpression.length() && regularExpression.charAt(i) == '\\' && regularExpression.charAt(i + 1) == 'n') {
                     formattedEx.append("#");
                     i++;
-                    if (Character.isWhitespace(regularExpression.charAt(i))) {
-                        System.out.println("Encontre vacio 1");
-                    }
-
                 } else if (i + 1 < regularExpression.length() && !operators.contains(regularExpression.charAt(i + 1)) && regularExpression.charAt(i + 1) != ')') {
                     if (Character.isWhitespace(regularExpression.charAt(i))) {
                         formattedEx.append("$");
