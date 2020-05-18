@@ -1,6 +1,4 @@
-import java.util.Arrays;
-import java.util.List;
-import java.util.Stack;
+import java.util.*;
 
 /**
  * Expresión regular a notación postfija
@@ -17,10 +15,61 @@ public class Modulo1 {
     }
 
     public String exToPostix(String regularExpression) {
+        //Texto con el formato
+        String formattedEx = formattedEx(regularExpression);
 
+        //Creacion de pila
+        Stack<Character> stack = new Stack<>();
 
-        return "";
+        for (Character c : formattedEx.toCharArray()) {
+            switch (c){
+                case '(':
+                    stack.push(c);
+                    break;
+
+                case ')':
+                    while (!stack.peek().equals('(')){
+                        postfix += stack.pop();
+                    }
+                    stack.pop();
+                    break;
+
+                default:
+                    while (stack.size() > 0 ){
+                        Character peekedChar = stack.peek();
+
+                        Integer peekedCharPrecedence = getPrecedence(peekedChar);
+                        Integer currentCharPrecedence = getPrecedence(c);
+
+                        if(peekedCharPrecedence >= currentCharPrecedence)
+                            postfix += stack.pop();
+                        else break;
+                    }
+                    stack.push(c);
+                    break;
+            }
+        }
+        while (stack.size() > 0 )
+            postfix += stack.pop();
+        return postfix;
     }
+
+    private static Integer getPrecedence(Character c) {
+        Integer precedence = precedenceMap.get(c);
+        return precedence == null ? 6 : precedence;
+    }
+
+    private static final Map<Character, Integer> precedenceMap;
+    static {
+        Map<Character, Integer> map = new HashMap<Character, Integer>();
+        map.put('(', 0);
+        map.put(',', 1);
+        map.put('.', 2);
+        map.put('+', 3);
+        map.put('*', 3);
+
+        precedenceMap = Collections.unmodifiableMap(map);
+    };
 
     public String formattedEx(String regularExpression) {
         StringBuilder formattedEx = new StringBuilder();
