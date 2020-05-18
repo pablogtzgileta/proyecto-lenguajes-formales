@@ -5,6 +5,9 @@ import java.util.*;
  */
 public class Modulo1 {
 
+    // Concatenacion = .
+    // Salto de linea = #
+
     static String postfix = "";
     static Stack<Character> stack = new Stack<>();
     static List<Character> operators = Arrays.asList('*', '+', ',', '.');
@@ -63,7 +66,7 @@ public class Modulo1 {
 
     private static final Map<Character, Integer> precedenceMap;
     static {
-        Map<Character, Integer> map = new HashMap<Character, Integer>();
+        Map<Character, Integer> map = new HashMap<>();
         map.put('(', 0);
         map.put(',', 1);
         map.put('.', 2);
@@ -76,15 +79,21 @@ public class Modulo1 {
     public String formattedEx(String regularExpression) {
         StringBuilder formattedEx = new StringBuilder();
 
-
         for (int i = 0; i < regularExpression.length(); i++) {
             if (operators.contains(regularExpression.charAt(i)) || regularExpression.charAt(i) == '(') {
                 formattedEx.append(regularExpression.charAt(i));
             } else {
-                if (i + 1 < regularExpression.length() && !operators.contains(regularExpression.charAt(i + 1)) && regularExpression.charAt(i + 1) != ')') {
+                if (i + 1 < regularExpression.length() && regularExpression.charAt(i) == '\\' && regularExpression.charAt(i + 1) == 'n') {
+                    formattedEx.append("#");
+                    i++;
+                } else if (i + 1 < regularExpression.length() && !operators.contains(regularExpression.charAt(i + 1)) && regularExpression.charAt(i + 1) != ')') {
                     formattedEx.append(regularExpression.charAt(i)).append(".");
                 } else {
-                    formattedEx.append(regularExpression.charAt(i));
+                    if (Character.isWhitespace(regularExpression.charAt(i))) {
+                        formattedEx.append("$");
+                    } else {
+                        formattedEx.append(regularExpression.charAt(i));
+                    }
                 }
             }
         }
