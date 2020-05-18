@@ -79,7 +79,14 @@ public class Modulo1 {
 
         for (int i = 0; i < regularExpression.length(); i++) {
             if (operators.contains(regularExpression.charAt(i)) || regularExpression.charAt(i) == '(') {
-                formattedEx.append(regularExpression.charAt(i));
+                if (regularExpression.charAt(i) == '*' || regularExpression.charAt(i) == '+') {
+                    formattedEx.append(regularExpression.charAt(i));
+                    if (i + 1 < regularExpression.length()) {
+                        formattedEx.append(".");
+                    }
+                } else {
+                    formattedEx.append(regularExpression.charAt(i));
+                }
             } else {
                 if (i + 1 < regularExpression.length() && regularExpression.charAt(i) == '\\' && regularExpression.charAt(i + 1) == 'n') {
                     formattedEx.append("#");
