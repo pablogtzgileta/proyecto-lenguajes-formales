@@ -23,21 +23,20 @@ public class Modulo1 {
     }
 
     public String formattedEx(String regularExpression) {
-//        StringBuilder formattedEx = new StringBuilder();
-        StringBuilder test = new StringBuilder();
+        StringBuilder formattedEx = new StringBuilder();
 
 
         for (int i = 0; i < regularExpression.length(); i++) {
-            if (operators.contains(regularExpression.charAt(i)) || regularExpression.charAt(i + 1) == '(') {
-                test.append(regularExpression.charAt(i));
+            if (operators.contains(regularExpression.charAt(i)) || regularExpression.charAt(i) == '(') {
+                formattedEx.append(regularExpression.charAt(i));
             } else {
                 if (i + 1 < regularExpression.length() && !operators.contains(regularExpression.charAt(i + 1)) && regularExpression.charAt(i + 1) != ')') {
-                    test.append(regularExpression.charAt(i)).append(".");
+                    formattedEx.append(regularExpression.charAt(i)).append(".");
                 } else {
-                    test.append(regularExpression.charAt(i));
+                    formattedEx.append(regularExpression.charAt(i));
                 }
             }
         }
-        return test.toString();
+        return formattedEx.toString();
     }
 }
