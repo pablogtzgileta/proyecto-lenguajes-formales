@@ -8,22 +8,17 @@ public class Modulo1 {
     // Concatenacion = .
     // Salto de linea = #
 
-    static String postfix = "";
-    static Stack<Character> stack = new Stack<>();
-    static List<Character> operators = Arrays.asList('*', '+', ',', '.');
-    static List<Character> parenthesis = Arrays.asList('(', ')');
+    private static String postfix = "";
+    private static Stack<Character> stack = new Stack<>();
+    private static List<Character> operators = Arrays.asList('*', '+', ',', '.');
 
     public Modulo1() {
 
     }
 
-
     public String exToPostix(String regularExpression) {
         //Texto con el formato
         String formattedEx = formattedEx(regularExpression);
-
-        //Creacion de pila
-        Stack<Character> stack = new Stack<>();
 
         for (Character c : formattedEx.toCharArray()) {
             switch (c) {
@@ -55,6 +50,9 @@ public class Modulo1 {
         }
         while (stack.size() > 0)
             postfix += stack.pop();
+
+        stack = new Stack<>();
+
         return postfix;
     }
 
@@ -76,7 +74,7 @@ public class Modulo1 {
         precedenceMap = Collections.unmodifiableMap(map);
     }
 
-    public String formattedEx(String regularExpression) {
+    private String formattedEx(String regularExpression) {
         StringBuilder formattedEx = new StringBuilder();
 
         for (int i = 0; i < regularExpression.length(); i++) {
